@@ -6,7 +6,9 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: book-catalog
+      app: {{ .Values.appLabel }}
+    labels:
+      app: {{ .Values.appLabel }}
   template:
     metadata:
       labels:
@@ -17,6 +19,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 8000
+          envFrom:
+          - configMapRef:
+              name: book-catalog-config
+
           env:
-            - name: DJANGO_SETTINGS_MODULE
-              value: "config.settings"
+          - name: DJANGO_SETTINGS_MODULE
+            valueFrom:
+              configMapKeyRef:
+                name: book-catalog-config
+                key: DJANGO_SETTINGS_MODULE
+

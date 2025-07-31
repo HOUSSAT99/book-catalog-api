@@ -10,7 +10,7 @@ service:
   port: 8000
 
 ingress:
-  enabled: false
+  host: book-catalog.local
 
 resources: {}
 
@@ -19,3 +19,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: []
+
+appLabel: book-catalog
+
+
